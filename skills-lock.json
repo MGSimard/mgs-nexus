@@ -50,12 +50,33 @@
       "skillPath": "skills/break-ui/SKILL.md",
       "computedHash": "f089f3663e197fb4e106249df70e815a96e3236520a2e1c0919d1694816baca8"
     },
+    "cf-cli": {
+      "source": "cloudflare/skills",
+      "commit": "5108325ecceabc899c761e07aa617b09c02445ee",
+      "sourceType": "github",
+      "skillPath": "skills/cf-cli/SKILL.md",
+      "computedHash": "2e05ef054a100c652513e6028ed478b16f7db01a4b397544bd20ced39a4591e9"
+    },
     "choreograph": {
       "source": "emilkowalski/skills",
       "commit": "64eb3deb9a5fbfa041faf783e0bc3fd635872e9c",
       "sourceType": "github",
       "skillPath": "skills/choreograph/SKILL.md",
       "computedHash": "a33a7cf57eacff502f833778eed62244fb5a890bb25124dacde73bcf8716218c"
+    },
+    "cloudflare": {
+      "source": "cloudflare/skills",
+      "commit": "5108325ecceabc899c761e07aa617b09c02445ee",
+      "sourceType": "github",
+      "skillPath": "skills/cloudflare/SKILL.md",
+      "computedHash": "a40c5c77e4b96b0f6603a54e67bf2ff401a872366af48ff8f6ae0e872d4ad324"
+    },
+    "cloudflare-app-bootstrap": {
+      "source": "cloudflare/skills",
+      "commit": "5108325ecceabc899c761e07aa617b09c02445ee",
+      "sourceType": "github",
+      "skillPath": "skills/cloudflare-app-bootstrap/SKILL.md",
+      "computedHash": "3979e94a82db1c3754f822995e3c2e6624ae4593c296f10eab31ce1e654133e5"
     },
     "code-review": {
       "source": "mattpocock/skills",
@@ -91,6 +112,13 @@
       "sourceType": "github",
       "skillPath": "skills/find-animation-opportunities/SKILL.md",
       "computedHash": "9ec1c8c622b2c3caf9bda1712440e25dd4f9bc6da1207db4fa80b784aa319186"
+    },
+    "frameworks-on-cloudflare": {
+      "source": "cloudflare/skills",
+      "commit": "5108325ecceabc899c761e07aa617b09c02445ee",
+      "sourceType": "github",
+      "skillPath": "skills/frameworks-on-cloudflare/SKILL.md",
+      "computedHash": "2e327d257090fa5e9202c9cb3ac20eae51fa6f069d3a4b1c56a7e3a5d4dfc5bb"
     },
     "gestures": {
       "source": "emilkowalski/skills",
@@ -288,12 +316,47 @@
       "skillPath": "skills/engineering/wayfinder/SKILL.md",
       "computedHash": "bd82983c105881f6cb0c15e5d029c0d5fca756939b69eebe94e49003069a276f"
     },
+    "web-perf": {
+      "source": "cloudflare/skills",
+      "commit": "5108325ecceabc899c761e07aa617b09c02445ee",
+      "sourceType": "github",
+      "skillPath": "skills/web-perf/SKILL.md",
+      "computedHash": "2716bf9bfafe4d8407b55c5213a143aea248686c4af92f8b43fc35327eaae41d"
+    },
     "wizard": {
       "source": "mattpocock/skills",
       "commit": "abeeaf95660ba9e8b7c753eb38f441ca707a8823",
       "sourceType": "github",
       "skillPath": "skills/engineering/wizard/SKILL.md",
       "computedHash": "806f7f7461824054ffaf3344e1e56e5e8a42344e22bdf8d22c6a8117eb9b1c38"
+    },
+    "workers-best-practices": {
+      "source": "cloudflare/skills",
+      "commit": "5108325ecceabc899c761e07aa617b09c02445ee",
+      "sourceType": "github",
+      "skillPath": "skills/workers-best-practices/SKILL.md",
+      "computedHash": "7f941bbc549454872a4c7c261bf75a1ef7aaa69666bc85cec91e97cf40c11cc6"
+    },
+    "workers-development": {
+      "source": "cloudflare/skills",
+      "commit": "5108325ecceabc899c761e07aa617b09c02445ee",
+      "sourceType": "github",
+      "skillPath": "skills/workers-development/SKILL.md",
+      "computedHash": "a5b7dd748116d8b83db7d198867badcdde53c9eb13bf884c7557d40d0c965e38"
+    },
+    "workers-profiling": {
+      "source": "cloudflare/skills",
+      "commit": "5108325ecceabc899c761e07aa617b09c02445ee",
+      "sourceType": "github",
+      "skillPath": "skills/workers-profiling/SKILL.md",
+      "computedHash": "3a7b8b1c2cfa19b293a8f55967dab217481cc04eb0dffe4b99e90df879529850"
+    },
+    "wrangler": {
+      "source": "cloudflare/skills",
+      "commit": "5108325ecceabc899c761e07aa617b09c02445ee",
+      "sourceType": "github",
+      "skillPath": "skills/wrangler/SKILL.md",
+      "computedHash": "182e370d8c26e6bcb896a57a63e6cab006b253b9278cc3515f7b9db2c4d07661"
     },
     "writing-for-agents": {
       "source": "mattpocock/skills",
