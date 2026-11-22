@@ -2,7 +2,7 @@ import { defineConfig } from "oxfmt";
 
 export default defineConfig({
   astro: true,
-  ignorePatterns: [".astro", "node_modules"],
+  ignorePatterns: [".agents", ".astro", ".claude", "dist", "node_modules"],
   semi: true,
   tabWidth: 2,
   printWidth: 120,

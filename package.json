@@ -13,7 +13,8 @@
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "lint": "node scripts/lint-comments.js",
-    "check": "astro sync && tsc --noEmit --runExternalCode"
+    "check": "astro sync && tsc --noEmit --runExternalCode",
+    "prepare": "husky"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.6",
@@ -26,6 +27,8 @@
     "@astrojs/check": "^0.9.12",
     "@astrojs/compiler-rs": "^0.5.3",
     "@astrojs/ts-content-mapper": "^0.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.1",
     "oxfmt": "^0.79.0",
     "typescript": "^7.1.0-dev.20261120.1"
   },
