@@ -211,6 +211,13 @@
       "skillPath": "skills/review-animations/SKILL.md",
       "computedHash": "50f1de2394b88bb3433eca1e30da6866a4e310963d872a66af20ca77fd77f07d"
     },
+    "security-audit": {
+      "source": "cloudflare/security-audit-skill",
+      "commit": "c1c8a8c1471069fb0e188eeaff69b8e8db6564a8",
+      "sourceType": "github",
+      "skillPath": "skills/security-audit/SKILL.md",
+      "computedHash": "8513eb3b2c39b8d05ef4f47b32ef4d18280b93a5efb91d8df6272f7435034af5"
+    },
     "setup-matt-pocock-skills": {
       "source": "mattpocock/skills",
       "commit": "abeeaf95660ba9e8b7c753eb38f441ca707a8823",
