@@ -2,7 +2,7 @@
 
 Code carries no comments. Comments drift from the code they describe, restate what the code already says, or excuse a hack instead of fixing it. A decision worth keeping goes into an ADR, a hack gets an issue, and everything else is deleted. The `/delete-comment` skill holds the triage procedure.
 
-`scripts/lint-comments.js` enforces the ban in two layers. The pre-commit hook runs it through lint-staged on staged files only, so it checks exactly what is being committed, not unstaged work in the same tree. CI runs the full scan (`pnpm lint`) as the backstop: it also catches what a staged-only check cannot, like a lowered count never committed to the baseline, and it can't be skipped with `--no-verify`.
+`scripts/lint-comments.ts` enforces the ban in two layers. The pre-commit hook runs it through lint-staged on staged files only, so it checks exactly what is being committed, not unstaged work in the same tree. CI runs the full scan (`pnpm lint`) as the backstop: it also catches what a staged-only check cannot, like a lowered count never committed to the baseline, and it can't be skipped with `--no-verify`.
 
 ## Consequences
 

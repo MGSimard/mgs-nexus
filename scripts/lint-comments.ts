@@ -2,6 +2,11 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { relative, resolve, sep } from "node:path";
 
+type Range = [start: number, end: number];
+type Comment = { line: number; preview: string };
+type Baseline = Record<string, number>;
+type Scanner = (src: string, start: number, end: number, ranges: Range[]) => void;
+
 const BASELINE_PATH = "scripts/comment-baseline.json";
 const SCANNED_EXTENSIONS = /\.(ts|js|mjs|cjs|astro|css)$/;
 const EXCLUDED_DIRECTORIES = /^(\.agents|\.claude|node_modules|dist|\.astro)\//;
@@ -23,12 +28,12 @@ const REGEX_PRECEDING_KEYWORDS = new Set([
   "await",
 ]);
 
-const findOrEnd = (src, needle, from, end) => {
+const findOrEnd = (src: string, needle: string, from: number, end: number): number => {
   const index = src.indexOf(needle, from);
   return index === -1 || index > end ? end : index;
 };
 
-const skipString = (src, i, end, quote) => {
+const skipString = (src: string, i: number, end: number, quote: string): number => {
   let j = i + 1;
   while (j < end) {
     if (src[j] === "\\") j += 2;
@@ -39,7 +44,7 @@ const skipString = (src, i, end, quote) => {
   return end;
 };
 
-const skipRegexLiteral = (src, i, end) => {
+const skipRegexLiteral = (src: string, i: number, end: number): number => {
   let j = i + 1;
   let inCharacterClass = false;
   while (j < end && src[j] !== "\n") {
@@ -52,21 +57,22 @@ const skipRegexLiteral = (src, i, end) => {
       break;
     } else j++;
   }
-  while (j < end && /[a-z]/i.test(src[j])) j++;
+  while (j < end && /[a-z]/i.test(src.charAt(j))) j++;
   return j;
 };
 
-const regexCanFollow = (previousToken) =>
+const regexCanFollow = (previousToken: string): boolean =>
   previousToken === "" || REGEX_PRECEDING_PUNCTUATORS.has(previousToken) || REGEX_PRECEDING_KEYWORDS.has(previousToken);
 
-const scanScript = (src, start, end, ranges) => {
+const scanScript: Scanner = (src, start, end, ranges) => {
   const stack = [{ inTemplate: false, braceDepth: 0 }];
   let previousToken = "";
   let i = start;
   while (i < end) {
     const frame = stack[stack.length - 1];
-    const c = src[i];
-    const next = src[i + 1];
+    if (!frame) break;
+    const c = src.charAt(i);
+    const next = src.charAt(i + 1);
     if (frame.inTemplate) {
       if (c === "\\") i += 2;
       else if (c === "`") (stack.pop(), (previousToken = ")"), i++);
@@ -105,7 +111,7 @@ const scanScript = (src, start, end, ranges) => {
       i++;
     } else if (/[\w$]/.test(c)) {
       let j = i;
-      while (j < end && /[\w$]/.test(src[j])) j++;
+      while (j < end && /[\w$]/.test(src.charAt(j))) j++;
       previousToken = src.slice(i, j);
       i = j;
     } else {
@@ -115,10 +121,10 @@ const scanScript = (src, start, end, ranges) => {
   }
 };
 
-const scanCss = (src, start, end, ranges) => {
+const scanCss: Scanner = (src, start, end, ranges) => {
   let i = start;
   while (i < end) {
-    const c = src[i];
+    const c = src.charAt(i);
     if (c === "'" || c === '"') i = skipString(src, i, end, c);
     else if (c === "/" && src[i + 1] === "*") {
       const commentEnd = Math.min(findOrEnd(src, "*/", i + 2, end) + 2, end);
@@ -131,7 +137,7 @@ const scanCss = (src, start, end, ranges) => {
 const ASTRO_TEMPLATE_PATTERN =
   /<(script|style)\b[^>]*>([\s\S]*?)<\/\1\s*>|<!--[\s\S]*?(?:-->|$)|\{\s*(\/\*[\s\S]*?\*\/|\/\/[^\n]*)/g;
 
-const scanAstro = (src, ranges) => {
+const scanAstro = (src: string, ranges: Range[]): void => {
   const frontmatter = /^---\r?\n[\s\S]*?\r?\n---/.exec(src);
   let templateStart = 0;
   if (frontmatter) {
@@ -140,7 +146,8 @@ const scanAstro = (src, ranges) => {
   }
   ASTRO_TEMPLATE_PATTERN.lastIndex = templateStart;
   for (const match of src.matchAll(ASTRO_TEMPLATE_PATTERN)) {
-    const [whole, tag, body, expressionComment] = match;
+    const whole = match[0];
+    const [, tag, body = "", expressionComment] = match;
     if (tag) {
       const bodyStart = match.index + whole.indexOf(">") + 1;
       const scan = tag === "script" ? scanScript : scanCss;
@@ -154,11 +161,11 @@ const scanAstro = (src, ranges) => {
   }
 };
 
-const isExempt = (text) => text.startsWith("/*!") || /^\/\/\/\s*<reference\b/.test(text);
+const isExempt = (text: string): boolean => text.startsWith("/*!") || /^\/\/\/\s*<reference\b/.test(text);
 
-const findComments = (file) => {
+const findComments = (file: string): Comment[] => {
   const src = readFileSync(file, "utf8");
-  const ranges = [];
+  const ranges: Range[] = [];
   if (file.endsWith(".astro")) scanAstro(src, ranges);
   else if (file.endsWith(".css")) scanCss(src, 0, src.length, ranges);
   else scanScript(src, 0, src.length, ranges);
@@ -168,13 +175,13 @@ const findComments = (file) => {
       text: src.slice(start, end),
     }))
     .filter(({ text }) => !isExempt(text))
-    .map(({ line, text }) => ({ line, preview: text.split("\n")[0].trim().slice(0, 100) }));
+    .map(({ line, text }) => ({ line, preview: (text.split("\n")[0] ?? "").trim().slice(0, 100) }));
 };
 
-const isScanned = (file) =>
-  file && SCANNED_EXTENSIONS.test(file) && !EXCLUDED_DIRECTORIES.test(file) && existsSync(file);
+const isScanned = (file: string): boolean =>
+  file !== "" && SCANNED_EXTENSIONS.test(file) && !EXCLUDED_DIRECTORIES.test(file) && existsSync(file);
 
-const listFiles = () =>
+const listFiles = (): string[] =>
   execFileSync("git", ["ls-files", "--cached", "--others", "--exclude-standard"], { encoding: "utf8" })
     .split("\n")
     .map((file) => file.trim())
@@ -182,10 +189,10 @@ const listFiles = () =>
 
 const argv = process.argv.slice(2);
 const flags = new Set(argv.filter((arg) => arg.startsWith("--")));
-const toRepoPath = (path) => relative(process.cwd(), resolve(path)).split(sep).join("/");
+const toRepoPath = (path: string): string => relative(process.cwd(), resolve(path)).split(sep).join("/");
 const paths = argv.filter((arg) => !arg.startsWith("--")).map(toRepoPath);
 const files = paths.length > 0 ? paths.filter(isScanned) : listFiles();
-const baseline = existsSync(BASELINE_PATH) ? JSON.parse(readFileSync(BASELINE_PATH, "utf8")) : {};
+const baseline: Baseline = existsSync(BASELINE_PATH) ? JSON.parse(readFileSync(BASELINE_PATH, "utf8")) : {};
 const found = new Map(files.map((file) => [file, findComments(file)]));
 
 if (flags.has("--list")) {
@@ -194,8 +201,8 @@ if (flags.has("--list")) {
   process.exit(0);
 }
 
-const problems = [];
-const nextBaseline = { ...baseline };
+const problems: string[] = [];
+const nextBaseline: Baseline = { ...baseline };
 let overBaseline = false;
 const checked = paths.length > 0 ? [...found.keys()] : [...new Set([...Object.keys(baseline), ...found.keys()])];
 for (const file of checked.sort()) {

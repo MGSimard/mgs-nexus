@@ -5,15 +5,15 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { after, test } from "node:test";
 
-const LINT = resolve(import.meta.dirname, "lint-comments.js");
+const LINT = resolve(import.meta.dirname, "lint-comments.ts");
 const BASELINE = "scripts/comment-baseline.json";
-const fixtures = [];
+const fixtures: string[] = [];
 
 after(() => {
   for (const dir of fixtures) rmSync(dir, { recursive: true, force: true });
 });
 
-const fixture = (files, baseline) => {
+const fixture = (files: Record<string, string>, baseline?: Record<string, number>) => {
   const dir = mkdtempSync(join(tmpdir(), "lint-comments-"));
   fixtures.push(dir);
   spawnSync("git", ["init", "-q"], { cwd: dir });
@@ -24,7 +24,7 @@ const fixture = (files, baseline) => {
   }
   return {
     dir,
-    run: (...args) => {
+    run: (...args: string[]) => {
       const result = spawnSync(process.execPath, [LINT, ...args], { cwd: dir, encoding: "utf8" });
       return { code: result.status, out: result.stdout + result.stderr };
     },

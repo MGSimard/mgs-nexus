@@ -12,9 +12,9 @@
     "astro": "astro",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "lint": "node scripts/lint-comments.js",
+    "lint": "node scripts/lint-comments.ts",
     "check": "astro sync && tsc --noEmit --runExternalCode",
-    "test": "node --test \"scripts/*.test.js\"",
+    "test": "node --test \"scripts/*.test.ts\"",
     "prepare": "husky"
   },
   "dependencies": {
@@ -28,6 +28,7 @@
     "@astrojs/check": "^0.9.12",
     "@astrojs/compiler-rs": "^0.5.3",
     "@astrojs/ts-content-mapper": "^0.2.0",
+    "@types/node": "^25.9.9",
     "husky": "^9.1.7",
     "lint-staged": "^17.6.1",
     "oxfmt": "^0.79.0",
