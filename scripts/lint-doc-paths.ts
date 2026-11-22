@@ -1,7 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
+import { isIgnored } from "./ignored.ts";
 
-const EXCLUDED_DIRECTORIES = /^(\.agents|\.claude|node_modules|dist)\//;
 const REPO_PATH = /^(src|scripts|docs|public|\.agents|\.claude|\.github|\.husky|\.vscode)\/[\w./-]*$/;
 const INLINE_CODE = /`([^`\n]+)`/g;
 
@@ -9,7 +9,7 @@ const listDocs = (): string[] =>
   execFileSync("git", ["ls-files", "--cached", "--others", "--exclude-standard", "*.md"], { encoding: "utf8" })
     .split("\n")
     .map((file) => file.trim())
-    .filter((file) => file !== "" && !EXCLUDED_DIRECTORIES.test(file) && existsSync(file));
+    .filter((file) => file !== "" && !isIgnored(file) && existsSync(file));
 
 const findMissingPaths = (doc: string): string[] => {
   const missing: string[] = [];
