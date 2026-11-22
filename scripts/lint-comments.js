@@ -1,5 +1,6 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { relative, resolve, sep } from "node:path";
 
 const BASELINE_PATH = "scripts/comment-baseline.json";
 const SCANNED_EXTENSIONS = /\.(ts|js|mjs|cjs|astro|css)$/;
@@ -170,15 +171,22 @@ const findComments = (file) => {
     .map(({ line, text }) => ({ line, preview: text.split("\n")[0].trim().slice(0, 100) }));
 };
 
+const isScanned = (file) =>
+  file && SCANNED_EXTENSIONS.test(file) && !EXCLUDED_DIRECTORIES.test(file) && existsSync(file);
+
 const listFiles = () =>
   execFileSync("git", ["ls-files", "--cached", "--others", "--exclude-standard"], { encoding: "utf8" })
     .split("\n")
     .map((file) => file.trim())
-    .filter((file) => file && SCANNED_EXTENSIONS.test(file) && !EXCLUDED_DIRECTORIES.test(file) && existsSync(file));
+    .filter(isScanned);
 
-const args = new Set(process.argv.slice(2));
+const argv = process.argv.slice(2);
+const args = new Set(argv.filter((arg) => arg.startsWith("--")));
+const toRepoPath = (path) => relative(process.cwd(), resolve(path)).split(sep).join("/");
+const paths = argv.filter((arg) => !arg.startsWith("--")).map(toRepoPath);
+const files = paths.length > 0 ? paths.filter(isScanned) : listFiles();
 const baseline = existsSync(BASELINE_PATH) ? JSON.parse(readFileSync(BASELINE_PATH, "utf8")) : {};
-const found = new Map(listFiles().map((file) => [file, findComments(file)]));
+const found = new Map(files.map((file) => [file, findComments(file)]));
 
 if (args.has("--list")) {
   for (const [file, comments] of found)
@@ -187,9 +195,10 @@ if (args.has("--list")) {
 }
 
 const problems = [];
-const nextBaseline = {};
+const nextBaseline = { ...baseline };
 let overBaseline = false;
-for (const file of [...new Set([...Object.keys(baseline), ...found.keys()])].sort()) {
+const checked = paths.length > 0 ? [...found.keys()] : [...new Set([...Object.keys(baseline), ...found.keys()])];
+for (const file of checked.sort()) {
   const allowed = baseline[file] ?? 0;
   const comments = found.get(file) ?? [];
   if (comments.length > allowed) {
@@ -203,6 +212,7 @@ for (const file of [...new Set([...Object.keys(baseline), ...found.keys()])].sor
   }
   const kept = Math.min(allowed, comments.length);
   if (kept > 0) nextBaseline[file] = kept;
+  else delete nextBaseline[file];
 }
 
 if (args.has("--update")) writeFileSync(BASELINE_PATH, `${JSON.stringify(nextBaseline, null, 2)}\n`);
