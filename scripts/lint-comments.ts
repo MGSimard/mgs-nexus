@@ -1,16 +1,14 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { relative, resolve, sep } from "node:path";
-import { findComments, type Comment } from "./find-comments.ts";
-import { isIgnored } from "./ignored.ts";
+import { isExcluded } from "./excluded-paths.ts";
+import { findComments, isScannable, type FoundComment } from "./find-comments.ts";
 
 type Baseline = Record<string, number>;
 
 const BASELINE_PATH = "scripts/comment-baseline.json";
-const SCANNED_EXTENSIONS = /\.(ts|js|mjs|cjs|astro|css|json)$/;
 
-const isScanned = (file: string): boolean =>
-  file !== "" && SCANNED_EXTENSIONS.test(file) && !isIgnored(file) && existsSync(file);
+const isScanned = (file: string): boolean => file !== "" && isScannable(file) && !isExcluded(file) && existsSync(file);
 
 const listFiles = (): string[] =>
   execFileSync("git", ["ls-files", "--cached", "--others", "--exclude-standard"], { encoding: "utf8" })
@@ -20,7 +18,7 @@ const listFiles = (): string[] =>
 
 const toRepoPath = (path: string): string => relative(process.cwd(), resolve(path)).split(sep).join("/");
 
-const describe = (file: string, { line, text }: Comment): string =>
+const formatFinding = (file: string, { line, text }: FoundComment): string =>
   `${file}:${line}  ${(text.split("\n")[0] ?? "").trim().slice(0, 100)}`;
 
 const argv = process.argv.slice(2);
@@ -31,7 +29,7 @@ const baseline: Baseline = existsSync(BASELINE_PATH) ? JSON.parse(readFileSync(B
 const found = new Map(files.map((file) => [file, findComments(file, readFileSync(file, "utf8"))]));
 
 if (flags.has("--list")) {
-  for (const [file, comments] of found) for (const comment of comments) console.log(describe(file, comment));
+  for (const [file, comments] of found) for (const comment of comments) console.log(formatFinding(file, comment));
   process.exit(0);
 }
 
@@ -45,7 +43,7 @@ for (const file of checked.sort()) {
   if (comments.length > allowed) {
     overBaseline = true;
     problems.push(`${file}: ${comments.length} comment(s), baseline allows ${allowed}`);
-    for (const comment of comments) problems.push(`  ${describe(file, comment)}`);
+    for (const comment of comments) problems.push(`  ${formatFinding(file, comment)}`);
   } else if (comments.length < allowed && !flags.has("--update")) {
     problems.push(
       `${file}: down to ${comments.length} comment(s) from ${allowed}; run \`pnpm lint --update\` to lock in the ratchet`

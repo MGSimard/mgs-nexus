@@ -1,4 +1,8 @@
-export type Comment = { line: number; text: string };
+export type FoundComment = { line: number; text: string };
+
+const SCANNABLE_EXTENSIONS = /\.(ts|js|mjs|cjs|astro|css|json)$/;
+
+export const isScannable = (path: string): boolean => SCANNABLE_EXTENSIONS.test(path);
 
 type Span = { start: number; end: number };
 
@@ -27,16 +31,17 @@ const findOrEnd = (src: string, needle: string, from: number, end: number): numb
   return index === -1 || index > end ? end : index;
 };
 
-const recordUntil = (spans: Span[], start: number, end: number): number => {
-  spans.push({ start, end });
-  return end;
+const recordLineComment = (src: string, i: number, end: number, spans: Span[]): number => {
+  const commentEnd = findOrEnd(src, "\n", i, end);
+  spans.push({ start: i, end: commentEnd });
+  return commentEnd;
 };
 
-const skipLineComment = (src: string, i: number, end: number, spans: Span[]): number =>
-  recordUntil(spans, i, findOrEnd(src, "\n", i, end));
-
-const skipBlockComment = (src: string, i: number, end: number, spans: Span[]): number =>
-  recordUntil(spans, i, Math.min(findOrEnd(src, "*/", i + 2, end) + 2, end));
+const recordBlockComment = (src: string, i: number, end: number, spans: Span[]): number => {
+  const commentEnd = Math.min(findOrEnd(src, "*/", i + 2, end) + 2, end);
+  spans.push({ start: i, end: commentEnd });
+  return commentEnd;
+};
 
 const skipString = (src: string, i: number, end: number, quote: string): number => {
   let j = i + 1;
@@ -95,9 +100,9 @@ const scanScript = (src: string, start: number, end: number, spans: Span[]): voi
     if (/\s/.test(c)) {
       i++;
     } else if (c === "/" && next === "/") {
-      i = skipLineComment(src, i, end, spans);
+      i = recordLineComment(src, i, end, spans);
     } else if (c === "/" && next === "*") {
-      i = skipBlockComment(src, i, end, spans);
+      i = recordBlockComment(src, i, end, spans);
     } else if (c === "/" && regexCanFollow(previousToken)) {
       i = skipRegexLiteral(src, i, end);
       previousToken = ")";
@@ -133,7 +138,7 @@ const scanCss = (src: string, start: number, end: number, spans: Span[]): void =
   while (i < end) {
     const c = src.charAt(i);
     if (c === "'" || c === '"') i = skipString(src, i, end, c);
-    else if (c === "/" && src[i + 1] === "*") i = skipBlockComment(src, i, end, spans);
+    else if (c === "/" && src[i + 1] === "*") i = recordBlockComment(src, i, end, spans);
     else i++;
   }
 };
@@ -164,7 +169,7 @@ const scanAstro = (src: string, spans: Span[]): void => {
 
 const isExempt = (text: string): boolean => text.startsWith("/*!") || /^\/\/\/\s*<reference\b/.test(text);
 
-export const findComments = (path: string, source: string): Comment[] => {
+export const findComments = (path: string, source: string): FoundComment[] => {
   const spans: Span[] = [];
   if (path.endsWith(".astro")) scanAstro(source, spans);
   else if (path.endsWith(".css")) scanCss(source, 0, source.length, spans);
