@@ -1,17 +1,23 @@
 {
   "name": "app",
-  "type": "module",
   "version": "0.0.1",
-  "engines": {
-    "node": ">=22.23.4"
-  },
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   },
   "dependencies": {
     "astro": "^7.4.13"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.79.0",
+    "prettier-plugin-astro": "^1.1.2"
+  },
+  "engines": {
+    "node": ">=22.23.4"
   }
 }

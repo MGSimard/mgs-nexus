@@ -21,5 +21,5 @@ Layer order, declared once at the top of the global stylesheet:
 
 ## Consequences
 
-- `reset` sits *before* `ui-sdk` so UI SDK's functional rules (hiding closed popups, default `display`) aren't overridden by the reset.
+- `reset` sits _before_ `ui-sdk` so UI SDK's functional rules (hiding closed popups, default `display`) aren't overridden by the reset.
 - The reset's `[hidden]` rule is `!important`; important declarations in an earlier layer beat later layers, so nothing can un-hide a `[hidden]` element.
