@@ -30,7 +30,7 @@
     "typescript": "^7.1.0-dev.20261120.1"
   },
   "lint-staged": {
-    "*": "oxfmt"
+    "*.{astro,js,jsx,ts,tsx,json,jsonc,css,md,mdx}": "oxfmt"
   },
   "engines": {
     "node": ">=25"
