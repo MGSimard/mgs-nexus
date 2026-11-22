@@ -12,6 +12,10 @@ Default vocabulary: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-
 
 Single-context: one `GLOSSARY.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
 
+## Code comments
+
+Code carries no comments. Record a non-obvious decision as an ADR in `docs/adr/`; for a workaround, fix it or file an issue. `pnpm lint` enforces this (ADR-0004).
+
 ## Astro Development
 
 When starting the dev server, use background mode:

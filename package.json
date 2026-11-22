@@ -12,6 +12,7 @@
     "astro": "astro",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
+    "lint": "node scripts/lint-comments.js",
     "check": "astro sync && tsc --noEmit --runExternalCode"
   },
   "dependencies": {
