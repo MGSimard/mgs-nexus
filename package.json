@@ -13,6 +13,7 @@
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "lint": "node scripts/lint-comments.ts",
+    "lint:docs": "node scripts/lint-doc-paths.ts",
     "check": "astro sync && tsc --noEmit --runExternalCode",
     "test": "node --test \"scripts/*.test.ts\"",
     "prepare": "husky"

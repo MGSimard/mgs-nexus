@@ -18,6 +18,9 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm format:check
       - run: pnpm lint
+      - run: pnpm lint:docs
+      - name: .claude/skills matches .agents/skills
+        run: git diff --exit-code --stat HEAD:.agents/skills HEAD:.claude/skills
       - run: pnpm test
       - run: pnpm check
       - run: pnpm build

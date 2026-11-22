@@ -1,35 +1,15 @@
 import assert from "node:assert/strict";
-import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
-import { after, test } from "node:test";
+import { readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
+import { test } from "node:test";
+import { createFixture } from "./fixture.ts";
 
 const LINT = resolve(import.meta.dirname, "lint-comments.ts");
 const BASELINE = "scripts/comment-baseline.json";
-const fixtures: string[] = [];
-
-after(() => {
-  for (const dir of fixtures) rmSync(dir, { recursive: true, force: true });
-});
 
 const fixture = (files: Record<string, string>, baseline?: Record<string, number>) => {
-  const dir = mkdtempSync(join(tmpdir(), "lint-comments-"));
-  fixtures.push(dir);
-  spawnSync("git", ["init", "-q"], { cwd: dir });
-  const all = baseline ? { ...files, [BASELINE]: JSON.stringify(baseline) } : files;
-  for (const [path, content] of Object.entries(all)) {
-    mkdirSync(dirname(join(dir, path)), { recursive: true });
-    writeFileSync(join(dir, path), content);
-  }
-  return {
-    dir,
-    run: (...args: string[]) => {
-      const result = spawnSync(process.execPath, [LINT, ...args], { cwd: dir, encoding: "utf8" });
-      return { code: result.status, out: result.stdout + result.stderr };
-    },
-    baseline: () => JSON.parse(readFileSync(join(dir, BASELINE), "utf8")),
-  };
+  const created = createFixture(LINT, baseline ? { ...files, [BASELINE]: JSON.stringify(baseline) } : files);
+  return { ...created, baseline: () => JSON.parse(readFileSync(join(created.dir, BASELINE), "utf8")) };
 };
 
 const COMMENTED_TS = "const a = 1;\n// line comment\n/* block comment */\n";
