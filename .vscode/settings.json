@@ -3,10 +3,6 @@
   "editor.formatOnSaveMode": "file",
   "editor.defaultFormatter": "oxc.oxc-vscode",
   "html.customData": ["./node_modules/@ui-sdk/web/html-custom-data.json"],
-  // "oxc.typeAware": true, REMEMBER ONCE OXLINT DO NOT DELETE
-  "editor.codeActionsOnSave": {
-    // "source.fixAll.oxc": "always" REMEMBER ONCE OXLINT DO NOT DELETE
-  },
   "[astro]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   }

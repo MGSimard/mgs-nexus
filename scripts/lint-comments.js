@@ -181,14 +181,14 @@ const listFiles = () =>
     .filter(isScanned);
 
 const argv = process.argv.slice(2);
-const args = new Set(argv.filter((arg) => arg.startsWith("--")));
+const flags = new Set(argv.filter((arg) => arg.startsWith("--")));
 const toRepoPath = (path) => relative(process.cwd(), resolve(path)).split(sep).join("/");
 const paths = argv.filter((arg) => !arg.startsWith("--")).map(toRepoPath);
 const files = paths.length > 0 ? paths.filter(isScanned) : listFiles();
 const baseline = existsSync(BASELINE_PATH) ? JSON.parse(readFileSync(BASELINE_PATH, "utf8")) : {};
 const found = new Map(files.map((file) => [file, findComments(file)]));
 
-if (args.has("--list")) {
+if (flags.has("--list")) {
   for (const [file, comments] of found)
     for (const { line, preview } of comments) console.log(`${file}:${line}  ${preview}`);
   process.exit(0);
@@ -205,7 +205,7 @@ for (const file of checked.sort()) {
     overBaseline = true;
     problems.push(`${file}: ${comments.length} comment(s), baseline allows ${allowed}`);
     for (const { line, preview } of comments) problems.push(`  ${file}:${line}  ${preview}`);
-  } else if (comments.length < allowed && !args.has("--update")) {
+  } else if (comments.length < allowed && !flags.has("--update")) {
     problems.push(
       `${file}: down to ${comments.length} comment(s) from ${allowed}; run \`pnpm lint --update\` to lock in the ratchet`
     );
@@ -215,7 +215,7 @@ for (const file of checked.sort()) {
   else delete nextBaseline[file];
 }
 
-if (args.has("--update")) writeFileSync(BASELINE_PATH, `${JSON.stringify(nextBaseline, null, 2)}\n`);
+if (flags.has("--update")) writeFileSync(BASELINE_PATH, `${JSON.stringify(nextBaseline, null, 2)}\n`);
 
 if (problems.length > 0) {
   console.error(problems.join("\n"));

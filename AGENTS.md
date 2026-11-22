@@ -44,4 +44,4 @@ Consult these guides before working on related tasks:
 Before using ui-sdk, follow the ui-sdk skill if it's installed, and read `node_modules/@ui-sdk/web/docs/llms.txt`. To build a new component, also search `node_modules/@ui-sdk/web/docs/core.md` by heading, and read `rendering.md` next to it.
 
 - Register tags by importing a component's entry (e.g. `import "@ui-sdk/web/dialog"`) inside a `<script>` in the Astro component that uses it. The root `@ui-sdk/web` entry registers nothing.
-- The default stylesheet (`@ui-sdk/core/web.css`) is intentionally not used; style components with hand-written CSS via their `data-*` state attributes. The `ui-sdk` layer order is declared in `src/css/global.css`.
+- The default stylesheet (`@ui-sdk/core/web.css`) is intentionally not used; style components with hand-written CSS via their `data-*` state attributes. Cascade layer order: ADR-0002.

@@ -18,6 +18,7 @@
 ---
 
 - [ ] Oxlint when full support is available
+  - [ ] In `.vscode/settings.json`, turn on `"oxc.typeAware": true` and `"editor.codeActionsOnSave": { "source.fixAll.oxc": "always" }`
 
 ```ts
 import { defineConfig } from "oxlint";
@@ -33,7 +34,7 @@ export default defineConfig({
     typeAware: true,
     typeCheck: true,
   },
-  ignorePatterns: [".astro", "dist", "node_modules"],
+  ignorePatterns: [".agents", ".astro", ".claude", "dist", "node_modules"],
   plugins: ["eslint", "import", "jsdoc", "jsx-a11y", "node", "oxc", "promise", "typescript", "unicorn", "vitest"],
   jsPlugins: [],
   rules: {

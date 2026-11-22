@@ -92,7 +92,7 @@ test("allows license comments and triple-slash references", () => {
   assert.equal(code, 0, out);
 });
 
-test("skips the vendored skill folders", () => {
+test("skips the installed skill folders", () => {
   const { code, out } = fixture({ ".agents/s/x.ts": COMMENTED_TS, ".claude/s/x.ts": COMMENTED_TS }).run();
   assert.equal(code, 0, out);
 });
