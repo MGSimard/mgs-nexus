@@ -13,9 +13,11 @@
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "lint": "node scripts/lint-comments.ts",
+    "lint:tests": "oxlint",
     "lint:docs": "node scripts/lint-doc-paths.ts",
     "check": "astro sync && tsc --noEmit --runExternalCode",
-    "test": "node --test \"scripts/*.test.ts\"",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
     "prepare": "husky"
   },
   "dependencies": {
@@ -29,11 +31,15 @@
     "@astrojs/check": "^0.9.12",
     "@astrojs/compiler-rs": "^0.5.3",
     "@astrojs/ts-content-mapper": "^0.2.0",
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.65.1",
     "@types/node": "^25.9.9",
     "husky": "^9.1.7",
     "lint-staged": "^17.6.1",
     "oxfmt": "^0.79.0",
-    "typescript": "^7.1.0-dev.20261120.1"
+    "oxlint": "1.94.0",
+    "typescript": "^7.1.0-dev.20261120.1",
+    "vitest": "^5.1.1"
   },
   "engines": {
     "node": ">=25"

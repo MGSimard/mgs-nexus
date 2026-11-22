@@ -12,6 +12,10 @@ Default vocabulary: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-
 
 Single-context: one `GLOSSARY.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
 
+### Testing
+
+Test rules take priority over the `tdd` skill; load `mgs-testing-conventions` before writing, changing, reviewing or pruning a test. See `docs/agents/testing.md`.
+
 ## Code comments
 
 Code carries no comments. Record a non-obvious decision as an ADR in `docs/adr/`; for a workaround, fix it or file an issue. `pnpm lint` enforces this (ADR-0004).
