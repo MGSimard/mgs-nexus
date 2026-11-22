@@ -12,18 +12,27 @@
     "astro": "astro",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "check": "astro sync && tsc --noEmit --runExternalCode"
+    "lint": "node scripts/lint-comments.ts",
+    "lint:docs": "node scripts/lint-doc-paths.ts",
+    "check": "astro sync && tsc --noEmit --runExternalCode",
+    "test": "node --test \"scripts/*.test.ts\"",
+    "prepare": "husky"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.6",
+    "@ui-sdk/core": "0.1.0-beta.13",
+    "@ui-sdk/web": "0.1.0-beta.13",
     "astro": "^7.4.13",
     "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
+    "@astrojs/compiler-rs": "^0.5.3",
     "@astrojs/ts-content-mapper": "^0.2.0",
+    "@types/node": "^25.9.9",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.1",
     "oxfmt": "^0.79.0",
-    "prettier-plugin-astro": "^1.1.2",
     "typescript": "^7.1.0-dev.20261120.1"
   },
   "engines": {

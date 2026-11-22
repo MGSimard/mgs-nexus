@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "html.customData": ["./node_modules/@ui-sdk/web/html-custom-data.json"],
+  "[astro]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  }
+}

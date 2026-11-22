@@ -1,4 +1,10 @@
 {
-  "recommendations": ["astro-build.astro-vscode"],
-  "unwantedRecommendations": []
+  "recommendations": [
+    "astro-build.astro-vscode",
+    "coderabbit.coderabbit-vscode",
+    "GitHub.vscode-pull-request-github",
+    "github.vscode-github-actions",
+    "oxc.oxc-vscode",
+    "YoavBls.pretty-ts-errors"
+  ]
 }
