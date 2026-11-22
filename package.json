@@ -11,7 +11,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "oxfmt",
-    "format:check": "oxfmt --check"
+    "format:check": "oxfmt --check",
+    "check": "astro sync && tsc --noEmit --runExternalCode"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.6",
@@ -19,8 +20,11 @@
     "sharp": "^0.35.5"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@astrojs/ts-content-mapper": "^0.2.0",
     "oxfmt": "^0.79.0",
-    "prettier-plugin-astro": "^1.1.2"
+    "prettier-plugin-astro": "^1.1.2",
+    "typescript": "^7.1.0-dev.20261120.1"
   },
   "engines": {
     "node": ">=25"
