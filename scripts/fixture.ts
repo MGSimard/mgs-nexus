@@ -1,12 +1,12 @@
 import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
-import { after } from "node:test";
+import { afterAll } from "vitest";
 
 const fixtures: string[] = [];
 
-after(() => {
+afterAll(() => {
   for (const dir of fixtures) rmSync(dir, { recursive: true, force: true });
 });
 
@@ -20,6 +20,7 @@ export const createFixture = (script: string, files: Record<string, string>) => 
   }
   return {
     dir,
+    read: (path: string) => readFileSync(join(dir, path), "utf8"),
     run: (...args: string[]) => {
       const result = spawnSync(process.execPath, [script, ...args], { cwd: dir, encoding: "utf8" });
       return { code: result.status, out: result.stdout + result.stderr };
