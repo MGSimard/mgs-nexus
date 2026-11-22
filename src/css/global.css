@@ -1,0 +1,8 @@
+/*
+  Cascade layer order (lowest → highest priority).
+  - reset: preflight (reset.css, imported before this file).
+  - ui-sdk: behavior CSS that @ui-sdk/web injects at runtime. Must be declared here so it
+    lands above the reset and below our own styles.
+  - components: hand-written component styles.
+*/
+@layer reset, ui-sdk, components;

@@ -178,6 +178,12 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.7.6
         version: 3.7.6
+      '@ui-sdk/core':
+        specifier: 0.1.0-beta.13
+        version: 0.1.0-beta.13
+      '@ui-sdk/web':
+        specifier: 0.1.0-beta.13
+        version: 0.1.0-beta.13(@ui-sdk/core@0.1.0-beta.13)
       astro:
         specifier: ^7.4.13
         version: 7.4.13(@types/node@26.6.6)(yaml@2.9.1)
@@ -1087,6 +1093,14 @@ packages:
     engines: {node: '>=16.20.0'}
     cpu: [x64]
     os: [win32]
+
+  '@ui-sdk/core@0.1.0-beta.13':
+    resolution: {integrity: sha512-URjk9hqdc/cZKDtw6Gb9NqjY48U8l0EgoP4d5ghlooa3av+GrR0iSmsav133UU4oelcuKIO1ZPJ4j7gIPMr1Vg==}
+
+  '@ui-sdk/web@0.1.0-beta.13':
+    resolution: {integrity: sha512-f3lnxrjlTCHagChy/6ZW+4Axv9XcDfPnawkxCL++mZ1NbLMf302WPvbwwP1w+/bxOgxucu4euLYOQ6aPoYzXZw==}
+    peerDependencies:
+      '@ui-sdk/core': ^0.1.0-beta.13
 
   '@ungap/structured-clone@1.4.0':
     resolution: {integrity: sha512-1mEZtMKPM09vDmQt5y7YvmN2+DFTP7Tg0EWXdic8/C6VRnpb33e4ghisCIE3WZjsE2N8mf+QV1Zqh7ZFYLWInQ==}
@@ -2812,6 +2826,12 @@ snapshots:
 
   '@typescript/typescript-win32-x64@7.1.0-dev.20261120.1':
     optional: true
+
+  '@ui-sdk/core@0.1.0-beta.13': {}
+
+  '@ui-sdk/web@0.1.0-beta.13(@ui-sdk/core@0.1.0-beta.13)':
+    dependencies:
+      '@ui-sdk/core': 0.1.0-beta.13
 
   '@ungap/structured-clone@1.4.0': {}
 
