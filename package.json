@@ -12,7 +12,8 @@
     "astro": "astro",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "check": "astro sync && tsc --noEmit --runExternalCode"
+    "check": "astro sync && tsc --noEmit --runExternalCode",
+    "prepare": "husky"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.6",
@@ -22,11 +23,17 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
     "@astrojs/ts-content-mapper": "^0.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.1",
     "oxfmt": "^0.79.0",
     "prettier-plugin-astro": "^1.1.2",
     "typescript": "^7.1.0-dev.20261120.1"
   },
+  "lint-staged": {
+    "*": "oxfmt"
+  },
   "engines": {
     "node": ">=25"
-  }
+  },
+  "packageManager": "pnpm@12.21.0"
 }
