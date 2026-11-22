@@ -1,5 +1,7 @@
 # MGSIMARD NEXUS
 
+`grill-with-docs → to-spec → to-tickets → implement → code-review → retro`
+
 ## Task list
 
 - [ ] Build a Design System (Marathon, Neo-Industrialism)
