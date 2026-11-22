@@ -6,6 +6,6 @@ Code carries no comments. Comments drift from the code they describe, restate wh
 
 ## Consequences
 
-- **Scope.** The lint scans script, Astro and CSS files. Config formats (JSON, YAML, shell, `.gitignore`) are not scanned, but the rule still applies to them; a reminder belongs in an issue or the README task list. The installed skill folders (`.agents/`, `.claude/`) are skipped, since most of their content comes from upstream repos.
+- **Scope.** The lint scans script, Astro, CSS and JSON files (JSON so that comments in JSONC configs like `tsconfig.json` and `.vscode/*.json` are caught). YAML, shell and `.gitignore` are not scanned, but the rule still applies to them; a reminder belongs in an issue or the README task list. The installed skill folders (`.agents/`, `.claude/`) are skipped, since most of their content comes from upstream repos.
 - **Ratchet.** `scripts/comment-baseline.json` records how many comments each grandfathered file may still hold. A file may never go above its count. When a file drops below it, the lint fails until `pnpm lint --update` lowers the baseline, so progress is locked in by a commit. `--update` only ever lowers counts.
 - **Exemptions.** Comments opening with `/*!` (the license-preservation convention minifiers honour) and `/// <reference …>` directives are allowed. The vendored Preflight license header uses `/*!` because the MIT license requires the notice to be kept.

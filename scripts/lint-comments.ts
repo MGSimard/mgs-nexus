@@ -8,7 +8,7 @@ type Baseline = Record<string, number>;
 type Scanner = (src: string, start: number, end: number, ranges: Range[]) => void;
 
 const BASELINE_PATH = "scripts/comment-baseline.json";
-const SCANNED_EXTENSIONS = /\.(ts|js|mjs|cjs|astro|css)$/;
+const SCANNED_EXTENSIONS = /\.(ts|js|mjs|cjs|astro|css|json)$/;
 const EXCLUDED_DIRECTORIES = /^(\.agents|\.claude|node_modules|dist|\.astro)\//;
 const REGEX_PRECEDING_PUNCTUATORS = new Set([..."(,=:[!&|?{};+-*%<>~^}"]);
 const REGEX_PRECEDING_KEYWORDS = new Set([

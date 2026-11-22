@@ -85,6 +85,15 @@ test("ignores comment markers inside strings, regexes, templates and markup", ()
   assert.equal(code, 0, out);
 });
 
+test("reports comments in JSON config files, not comment markers inside their strings", () => {
+  const { code, out } = fixture({
+    ".vscode/settings.json": '{\n  "url": "https://example.com/*x*/",\n  // reminder\n  "a": 1\n}\n',
+  }).run();
+  assert.equal(code, 1);
+  assert.match(out, /\.vscode\/settings\.json:3/);
+  assert.doesNotMatch(out, /settings\.json:2/);
+});
+
 test("allows license comments and triple-slash references", () => {
   const { code, out } = fixture({
     "a.ts": '/*! license */\n/// <reference types="astro/client" />\nconst a = 1;\n',

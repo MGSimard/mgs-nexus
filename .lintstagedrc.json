@@ -1,4 +1,4 @@
 {
   "*": "oxfmt --no-error-on-unmatched-pattern",
-  "*.{ts,js,mjs,cjs,astro,css}": "node scripts/lint-comments.ts"
+  "*.{ts,js,mjs,cjs,astro,css,json}": "node scripts/lint-comments.ts"
 }
