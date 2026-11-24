@@ -12,8 +12,9 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION, image } = Astro.prop
     <slot name="head" />
   </head>
   <body>
-    <main>
-      <slot />
-    </main>
+    <slot name="header" />
+    <slot />
+    <slot name="footer" />
+    <div id="noise" aria-hidden="true"></div>
   </body>
 </html>
