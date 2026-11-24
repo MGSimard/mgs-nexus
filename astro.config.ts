@@ -15,13 +15,12 @@ export default defineConfig({
   },
   fonts: [
     {
-      provider: fontProviders.local(),
-      name: "Maratype",
-      options: {
-        variants: [{ src: ["./src/assets/fonts/maratype/Maratype.woff2"], weight: "400", style: "normal" }],
-      },
+      provider: fontProviders.fontsource(),
+      name: "Oxanium",
+      styles: ["normal"],
+      weights: ["200 800"],
       display: "swap",
-      cssVariable: "--font-display",
+      cssVariable: "--font-oxanium",
     },
     {
       provider: fontProviders.fontsource(),
