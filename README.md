@@ -8,11 +8,11 @@
 - [ ] Custom Components using UI SDK
 - [ ] Pages
   - [ ] Home
-  - [ ] Projects
-  - [ ] mgs-recs
-  - [ ] mgs-exps
-  - [ ] Design System
-  - [ ] Blog
+  - [ ] Projects (WORK)
+  - [ ] mgs-recs (LOADOUT)
+  - [ ] mgs-exps (INTEL)
+  - [ ] Design System (???)
+  - [ ] Blog (TRANSMISSIONS)
   - [ ] 404
 - [ ] Metadata Pass
 - [ ] Deploy to Cloudflare Workers
