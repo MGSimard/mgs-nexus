@@ -1,36 +1,71 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
-const LINKS = ["work", "stack", "intel", "logs", "schema"];
 ---
 
 <Layout>
   <div id="hero">
     <main>
+      <span>FULLSTACK / DESIGN ENGINEER / LEVEL DESIGN</span>
       <h1>MGSIMARD</h1>
-      <p>FULLSTACK / DESIGN ENGINEER / LEVEL DESIGN</p>
     </main>
-    <nav>
-      <ul>
-        {LINKS.map((link) => (
-          <li>
-            <a href={link}>/ {link}</a>
-          </li>
-        ))}
-      </ul>
-    </nav>
   </div>
 </Layout>
 
 <style>
   #hero {
+    position: relative;
+    isolation: isolate;
     height: 100dvh;
+    overflow: hidden;
+  }
+  #hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--accent);
+    clip-path: polygon(
+      0 0,
+      25% 0,
+      25% 65%,
+      33% 65%,
+      33% 61%,
+      36% 61%,
+      36% 65%,
+      40% 65%,
+      40% 74%,
+      37% 74%,
+      37% 82%,
+      40% 82%,
+      40% 88%,
+      43% 88%,
+      43% 94%,
+      40% 94%,
+      40% 100%,
+      0 100%
+    );
   }
   main {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr);
+    justify-items: center;
+    height: 100%;
+    text-align: center;
+  }
+  span {
+    align-self: end;
+    color: var(--accent);
   }
   h1 {
-    font-size: clamp(2rem, 3vw, 4rem);
-    font-family: var(--font-oxanium);
+    align-self: center;
+    padding-inline: 0.05em;
+    font-family: var(--font-display);
+    font-size: min(80vw / 3.4, 50svh / 1.217);
+    color: var(--accent-foreground);
+    background: var(--accent);
+    border-image-source: linear-gradient(var(--accent) 0 0);
+    border-image-slice: 0 fill;
+    border-image-outset: 0 0 0 100vw;
   }
   nav {
     text-transform: uppercase;

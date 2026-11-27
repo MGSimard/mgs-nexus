@@ -29,8 +29,9 @@
   --background: var(--gray-19);
   --focus-ring: var(--white);
 
-  --font-test: var(--font-alloy);
-  --font-sans: var(--font-geist), -apple-system, BlinkMacSystemFont, ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-maratype), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-alloy), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-geist-serif), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono:
     var(--font-geist-mono), ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Monaco, "Courier New", monospace;
 
@@ -56,7 +57,12 @@
 }
 
 @layer base {
+  *::selection {
+    color: var(--accent-foreground);
+    background: var(--accent);
+  }
   html {
+    font-family: var(--font-mono);
     color: var(--foreground);
     text-wrap: pretty;
     background-color: var(--background);

@@ -19,22 +19,6 @@ export default defineConfig({
   },
   fonts: [
     {
-      provider: fontProviders.fontsource(),
-      name: "Oxanium",
-      styles: ["normal"],
-      weights: ["200 800"],
-      display: "swap",
-      cssVariable: "--font-oxanium",
-    },
-    {
-      provider: fontProviders.fontsource(),
-      name: "Zalando Sans Expanded",
-      styles: ["normal"],
-      weights: ["200 900"],
-      display: "swap",
-      cssVariable: "--font-zalando",
-    },
-    {
       provider: fontProviders.local(),
       name: "Alloy Sans",
       cssVariable: "--font-alloy",
@@ -50,12 +34,19 @@ export default defineConfig({
       },
     },
     {
-      provider: fontProviders.fontsource(),
-      name: "Geist",
-      styles: ["normal"],
-      weights: ["100 900"],
-      display: "swap",
-      cssVariable: "--font-geist",
+      provider: fontProviders.local(),
+      name: "Maratype",
+      cssVariable: "--font-maratype",
+      options: {
+        variants: [
+          {
+            src: ["./src/assets/fonts/maratype/Maratype.woff2"],
+            weight: "400",
+            style: "normal",
+            display: "swap",
+          },
+        ],
+      },
     },
     {
       provider: fontProviders.fontsource(),
@@ -64,6 +55,21 @@ export default defineConfig({
       weights: ["100 900"],
       display: "swap",
       cssVariable: "--font-geist-mono",
+    },
+    {
+      provider: fontProviders.local(),
+      name: "Geist Serif",
+      cssVariable: "--font-geist-serif",
+      options: {
+        variants: [
+          {
+            src: ["./src/assets/fonts/GeistSerif/GeistSerif.woff2"],
+            weight: "400",
+            style: "normal",
+            display: "swap",
+          },
+        ],
+      },
     },
   ],
 });
