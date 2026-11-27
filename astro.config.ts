@@ -28,6 +28,29 @@ export default defineConfig({
     },
     {
       provider: fontProviders.fontsource(),
+      name: "Zalando Sans Expanded",
+      styles: ["normal"],
+      weights: ["200 900"],
+      display: "swap",
+      cssVariable: "--font-zalando",
+    },
+    {
+      provider: fontProviders.local(),
+      name: "Alloy Sans",
+      cssVariable: "--font-alloy",
+      options: {
+        variants: [
+          {
+            src: ["./src/assets/fonts/AlloySans/AlloySans.woff2"],
+            weight: "200 900",
+            style: "normal",
+            display: "swap",
+          },
+        ],
+      },
+    },
+    {
+      provider: fontProviders.fontsource(),
       name: "Geist",
       styles: ["normal"],
       weights: ["100 900"],

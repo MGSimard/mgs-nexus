@@ -167,7 +167,8 @@ const scanAstro = (src: string, spans: Span[]): void => {
   }
 };
 
-const isExempt = (text: string): boolean => text.startsWith("/*!") || /^\/\/\/\s*<reference\b/.test(text);
+const isExempt = (text: string): boolean =>
+  text.startsWith("/*!") || /^\/\/\/\s*<reference\b/.test(text) || /^\/\*\s*#[0-9a-f]{3,8}\b/i.test(text);
 
 export const findComments = (path: string, source: string): FoundComment[] => {
   const spans: Span[] = [];

@@ -46,3 +46,10 @@ export default defineConfig({
   },
 });
 ```
+
+## Resources
+
+- [Marathon | Game UI Database](https://www.gameuidatabase.com/gameData.php?id=2605)
+- [Texture Codex](https://github.com/Battleroid/texture-codex)
+- [MGS Exps | Marathon](https://mgs-exps.mgsimard.workers.dev/references/marathon)
+- [MARATHON :: Behance](https://www.behance.net/gallery/205038723/MARATHON)
