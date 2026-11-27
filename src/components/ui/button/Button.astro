@@ -1,0 +1,66 @@
+---
+import type { VariantProps } from "@/lib/variants";
+import button from "./button";
+
+interface Props extends VariantProps<typeof button> {
+  disabled?: boolean;
+  type?: "button" | "submit" | "reset";
+}
+
+const { disabled = false, type = "button", ...variants } = Astro.props;
+---
+
+<ui-button disabled={disabled}>
+  <button type={type} {...button.data(variants)}>
+    <slot />
+  </button>
+</ui-button>
+
+<script>
+  import "@ui-sdk/web/button";
+</script>
+
+<style>
+  @layer components {
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
+      border: 1px solid var(--primary-button-bg);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      cursor: pointer;
+
+      &[data-size="sm"] {
+        padding: 0.25rem 0.625rem;
+        font-size: 0.75rem;
+      }
+      &[data-size="md"] {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+      }
+
+      &[data-variant="solid"] {
+        background: var(--primary-button-bg);
+        color: var(--primary-button-fg);
+      }
+      &[data-variant="ghost"] {
+        background: transparent;
+        color: var(--foreground);
+      }
+
+      &:hover:not([data-disabled]) {
+        filter: brightness(1.15);
+      }
+      &:focus-visible {
+        outline: 2px solid var(--foreground);
+        outline-offset: 2px;
+      }
+      &[data-disabled] {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+    }
+  }
+</style>

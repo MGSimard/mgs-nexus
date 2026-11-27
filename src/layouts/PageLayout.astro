@@ -1,0 +1,14 @@
+---
+import type { ComponentProps } from "astro/types";
+import SiteNav from "@/components/SiteNav.astro";
+import Layout from "./Layout.astro";
+
+type Props = ComponentProps<typeof Layout>;
+---
+
+<Layout {...Astro.props}>
+  <slot name="head" slot="head" />
+  <SiteNav slot="header" />
+  <slot />
+  <slot name="footer" slot="footer" />
+</Layout>

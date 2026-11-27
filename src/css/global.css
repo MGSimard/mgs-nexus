@@ -13,9 +13,29 @@
   --font-mono:
     var(--font-geist-mono), ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Monaco, "Courier New", monospace;
 
-  --accent: red;
-  --foreground: white;
-  --background: black;
+  --foreground: oklch(1 0 0);
+  --background: oklch(0.1876 0.004 286.01);
+
+  --card-bg: oklch(0.241 0.0096 276.68);
+
+  --reset-button-bg: oklch(0.3395 0.0153 275.53);
+
+  --secondary-button-fg: oklch(1 0 0);
+  --secondary-button-bg: oklch(0.2875 0.015 285.42);
+
+  --primary-button-bg: oklch(0.8869 0.0069 295.44);
+  --primary-button-fg: oklch(0.1876 0.004 286.01);
+
+  --input-bg: oklch(0.7795 0.0129 275.95);
+  --input-fg: oklch(0.1417 0.0044 285.82);
+  --input-inactive-bg: oklch(0.1417 0.0044 285.82);
+  --input-inactive-fg: oklch(0.7795 0.0129 275.95);
+
+  --green: oklch(0.8616 0.1916 148.18);
+  --blue: oklch(0.7319 0.1376 254.34);
+  --purple: oklch(0.6179 0.2755 309.84);
+  --yellow: oklch(0.9158 0.1869 103.62);
+  --red: oklch(0.6133 0.2191 26.61);
 
   --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
