@@ -1,0 +1,63 @@
+---
+import { STILL_HEIGHT, STILL_WIDTH } from "@/lib/glyph-lava/still";
+---
+
+<div class="glyph-lava" aria-hidden="true" style={`--still-size: ${STILL_WIDTH}px ${STILL_HEIGHT}px`}>
+  <canvas></canvas>
+</div>
+
+<script>
+  import { mountGlyphLava } from "@/lib/glyph-lava/glyph-lava";
+
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  const skip = connection?.saveData === true || matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  for (const host of document.querySelectorAll<HTMLElement>(".glyph-lava")) {
+    const canvas = host.querySelector("canvas");
+    if (!canvas || skip) continue;
+    mountGlyphLava(canvas, {
+      onFirstFrame: () => host.toggleAttribute("data-live", true),
+      onLost: () => host.removeAttribute("data-live"),
+    }).catch(() => host.removeAttribute("data-live"));
+  }
+</script>
+
+<style>
+  .glyph-lava {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    color: var(--accent);
+    pointer-events: none;
+  }
+  .glyph-lava::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: currentColor;
+    mask: url("/glyph-lava.svg") center / var(--still-size) no-repeat;
+  }
+  .glyph-lava[data-live]::before {
+    visibility: hidden;
+    transition: visibility 0s linear 300ms;
+  }
+  canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 300ms var(--ease-out-quad);
+  }
+  .glyph-lava[data-live] canvas {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    canvas,
+    .glyph-lava[data-live]::before {
+      transition: none;
+    }
+  }
+</style>

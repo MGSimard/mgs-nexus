@@ -1,9 +1,11 @@
 ---
+import GlyphLava from "@/components/GlyphLava.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
   <div id="hero">
+    <GlyphLava />
     <main>
       <span>FULLSTACK / DESIGN ENGINEER / LEVEL DESIGN</span>
       <h1>MGSIMARD</h1>
@@ -17,35 +19,43 @@ import Layout from "../layouts/Layout.astro";
     isolation: isolate;
     height: 100dvh;
     overflow: hidden;
+    background: url("/assets/clouds.jpg") center / cover no-repeat;
   }
-  #hero::before {
+  main::before,
+  main::after {
     content: "";
     position: absolute;
-    inset: 0;
     z-index: -1;
     background: var(--accent);
+  }
+  main::after {
+    top: 74%;
+    left: 45%;
+    width: 3%;
+    aspect-ratio: 1/1.5;
+  }
+  main::before {
+    inset: 0;
     clip-path: polygon(
       0 0,
       25% 0,
       25% 65%,
-      33% 65%,
-      33% 61%,
-      36% 61%,
-      36% 65%,
       40% 65%,
       40% 74%,
       37% 74%,
       37% 82%,
       40% 82%,
-      40% 88%,
-      43% 88%,
-      43% 94%,
-      40% 94%,
+      40% 93%,
+      45% 93%,
+      45% 98%,
+      40% 98%,
       40% 100%,
       0 100%
     );
   }
   main {
+    position: relative;
+    isolation: isolate;
     display: grid;
     grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr);
     justify-items: center;
@@ -54,13 +64,17 @@ import Layout from "../layouts/Layout.astro";
   }
   span {
     align-self: end;
+    font-family: var(--font-label);
     color: var(--accent);
+    mix-blend-mode: difference;
   }
   h1 {
     align-self: center;
-    padding-inline: 0.05em;
+    padding: 0.025em 0.125em;
     font-family: var(--font-display);
     font-size: min(80vw / 3.4, 50svh / 1.217);
+    text-box: trim-both cap alphabetic;
+    line-height: 1;
     color: var(--accent-foreground);
     background: var(--accent);
     border-image-source: linear-gradient(var(--accent) 0 0);
