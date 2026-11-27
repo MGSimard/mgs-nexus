@@ -11,5 +11,6 @@ Each UI component's Variants and States are declared in a plain `.ts` table besi
 ## Consequences
 
 - Compound Variants (a style for one combination) are CSS attribute selectors such as `[data-variant="danger"][data-size="sm"]`, not entries in the table.
+- Axes are independent, as in cva. A combination with no meaning is listed in the table's `exclude`, so Schema skips it. The types still allow it.
 - `data-variant` matches the attribute ui-sdk's own docs use for button variants.
 - A component whose Specimens need more than default slot text adds an optional `*.demo.astro` that receives the Variant and State props.

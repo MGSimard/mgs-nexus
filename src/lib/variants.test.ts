@@ -23,4 +23,17 @@ describe("defineVariants", () => {
       { tone: "alert", density: "loose", cornerStyle: "cut" },
     ]);
   });
+
+  test("leaves out combinations that match an exclude rule", () => {
+    const badge = defineVariants({
+      variants: { tone: ["plain", "alert"], density: ["tight", "loose"] },
+      defaults: { tone: "plain", density: "loose" },
+      exclude: [{ tone: "alert", density: "tight" }],
+    });
+    expect(badge.combos()).toEqual([
+      { tone: "plain", density: "tight" },
+      { tone: "plain", density: "loose" },
+      { tone: "alert", density: "loose" },
+    ]);
+  });
 });

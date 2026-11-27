@@ -36,7 +36,7 @@ const { disabled = false, type = "button", ...variants } = Astro.props;
       &:is(:disabled, [data-disabled], [aria-disabled="true"]) {
         cursor: not-allowed;
       }
-      &:is([data-variant="display-primary"], [data-variant="display-secondary"]) {
+      &[data-variant="display"] {
         min-width: 10rem;
         display: grid;
         place-content: end start;
@@ -49,23 +49,36 @@ const { disabled = false, type = "button", ...variants } = Astro.props;
         font-size: 1.4rem;
         font-weight: 700;
         text-transform: uppercase;
+        &[data-align="center"] {
+          place-content: center;
+        }
       }
-      &[data-variant="display-primary"] {
+      &[data-variant="display"][data-tone="primary"] {
         color: var(--gray-19);
         background: var(--gray-94);
-        &:is(:hover, :focus-visible) {
+        &:focus-visible {
           background: var(--gray-81);
+        }
+        @media (hover: hover) and (pointer: fine) {
+          &:hover {
+            background: var(--gray-81);
+          }
         }
         &:is(:disabled, [data-disabled], [aria-disabled="true"]) {
           color: var(--gray-30);
           background: var(--gray-50);
         }
       }
-      &[data-variant="display-secondary"] {
+      &[data-variant="display"][data-tone="secondary"] {
         color: var(--gray-98);
         background: var(--gray-29);
-        &:is(:hover, :focus-visible) {
+        &:focus-visible {
           background: var(--gray-27);
+        }
+        @media (hover: hover) and (pointer: fine) {
+          &:hover {
+            background: var(--gray-27);
+          }
         }
         &:is(:disabled, [data-disabled], [aria-disabled="true"]) {
           color: cyan;

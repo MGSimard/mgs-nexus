@@ -1,9 +1,11 @@
-@layer reset, ui-sdk, base, components;
+@layer reset, debug, ui-sdk, base, components;
 
-*,
-*::before,
-*::after {
-  outline: 1px solid rgba(255, 0, 0, 0.2);
+@layer debug {
+  *,
+  *::before,
+  *::after {
+    outline: 1px solid rgba(255, 0, 0, 0.2);
+  }
 }
 
 :root {
@@ -25,6 +27,7 @@
 
   --foreground: var(--white);
   --background: var(--gray-19);
+  --focus-ring: var(--white);
 
   --font-test: var(--font-alloy);
   --font-sans: var(--font-geist), -apple-system, BlinkMacSystemFont, ui-sans-serif, system-ui, sans-serif;
@@ -76,6 +79,10 @@
     user-select: none;
     -moz-user-select: none;
     z-index: 1;
+  }
+  :focus-visible {
+    outline: 1px solid var(--focus-ring);
+    outline-offset: 2px;
   }
   h1,
   h2,
