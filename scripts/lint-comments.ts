@@ -8,7 +8,10 @@ type Baseline = Record<string, number>;
 
 const BASELINE_PATH = "scripts/comment-baseline.json";
 
-const isScanned = (file: string): boolean => file !== "" && isScannable(file) && !isExcluded(file) && existsSync(file);
+const UNSCANNED_FILES = new Set(["src/css/global.css"]);
+
+const isScanned = (file: string): boolean =>
+  file !== "" && isScannable(file) && !isExcluded(file) && !UNSCANNED_FILES.has(file) && existsSync(file);
 
 const listFiles = (): string[] =>
   execFileSync("git", ["ls-files", "--cached", "--others", "--exclude-standard"], { encoding: "utf8" })

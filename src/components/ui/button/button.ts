@@ -2,10 +2,11 @@ import { defineVariants } from "@/lib/variants";
 
 export default defineVariants({
   variants: {
-    variant: ["solid", "ghost"],
-    size: ["sm", "md"],
+    variant: ["display"],
+    tone: ["primary", "secondary"],
+    align: ["end", "center"],
   },
-  defaults: { variant: "solid", size: "md" },
+  defaults: { variant: "display", tone: "primary", align: "end" },
   states: {
     disabled: { disabled: true },
   },

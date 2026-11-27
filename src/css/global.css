@@ -1,41 +1,45 @@
-@layer reset, ui-sdk, base, components;
+@layer reset, debug, ui-sdk, base, components;
 
-*,
-*::before,
-*::after {
-  outline: 1px solid rgba(255, 0, 0, 0.2);
+@layer debug {
+  *,
+  *::before,
+  *::after {
+    outline: 1px solid rgba(255, 0, 0, 0.2);
+  }
 }
 
 :root {
   color-scheme: dark;
 
+  --white: #ffffff;
+  --accent: oklch(0.9209 0.2325 125.54); /* #c0fe04 Marathon Green */
+  --accent-foreground: oklch(0.1881 0.006 285.81); /* #131316 */
+
+  --gray-98: oklch(0.9824 0.0013 286.38); /* #f9f9fa */
+  --gray-94: oklch(0.9439 0.004 286.32); /* #ececef */
+  --gray-81: oklch(0.8118 0.0042 286.31); /* #c1c1c4 */
+  --gray-51: oklch(0.5173 0.027 277.51); /* #646778 */
+  --gray-50: oklch(0.5039 0.0113 273.21); /* #62646b */
+  --gray-30: oklch(0.299 0.0127 279.15); /* #2c2d34 */
+  --gray-29: oklch(0.2909 0.0128 279.13); /* #2a2b32 */
+  --gray-27: oklch(0.2716 0.0129 285.51); /* #26262d */
+  --gray-19: oklch(0.1881 0.006 285.81); /* #131316 */
+
+  --foreground: var(--white);
+  --background: var(--gray-19);
+  --focus-ring: var(--white);
+
+  --font-test: var(--font-alloy);
   --font-sans: var(--font-geist), -apple-system, BlinkMacSystemFont, ui-sans-serif, system-ui, sans-serif;
   --font-mono:
     var(--font-geist-mono), ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Monaco, "Courier New", monospace;
 
-  --foreground: oklch(1 0 0);
-  --background: oklch(0.1876 0.004 286.01);
-
-  --card-bg: oklch(0.241 0.0096 276.68);
-
-  --reset-button-bg: oklch(0.3395 0.0153 275.53);
-
-  --secondary-button-fg: oklch(1 0 0);
-  --secondary-button-bg: oklch(0.2875 0.015 285.42);
-
-  --primary-button-bg: oklch(0.8869 0.0069 295.44);
-  --primary-button-fg: oklch(0.1876 0.004 286.01);
-
-  --input-bg: oklch(0.7795 0.0129 275.95);
-  --input-fg: oklch(0.1417 0.0044 285.82);
-  --input-inactive-bg: oklch(0.1417 0.0044 285.82);
-  --input-inactive-fg: oklch(0.7795 0.0129 275.95);
-
-  --green: oklch(0.8616 0.1916 148.18);
-  --blue: oklch(0.7319 0.1376 254.34);
-  --purple: oklch(0.6179 0.2755 309.84);
-  --yellow: oklch(0.9158 0.1869 103.62);
-  --red: oklch(0.6133 0.2191 26.61);
+  --tier-gray: oklch(0.8457 0.0099 273.34); /* #caccd3 Standard */
+  --tier-green: oklch(0.8509 0.2171 153.43); /* #00f587 Enhanced */
+  --tier-blue: oklch(0.7225 0.1527 246.93); /* #47acff Deluxe  */
+  --tier-purple: oklch(0.6321 0.2854 313.42); /* #c42fff Superior */
+  --tier-yellow: oklch(0.9249 0.1936 102.85); /* #ffea07 Prestige */
+  --tier-red: oklch(0.6447 0.241 27.38); /* #ff2d2d Contraband */
 
   --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -52,10 +56,6 @@
 }
 
 @layer base {
-  ::selection {
-    background: var(--accent);
-    color: var(--background);
-  }
   html {
     color: var(--foreground);
     text-wrap: pretty;
@@ -75,10 +75,14 @@
     inset: 0;
     pointer-events: none;
     background: url("/assets/noise.webp") repeat;
-    opacity: 0.075;
+    opacity: 0;
     user-select: none;
     -moz-user-select: none;
     z-index: 1;
+  }
+  :focus-visible {
+    outline: 1px solid var(--focus-ring);
+    outline-offset: 2px;
   }
   h1,
   h2,
@@ -90,5 +94,64 @@
   }
   code {
     font-family: var(--font-mono);
+  }
+}
+
+@layer DESIGN-NOTES {
+  :root {
+    --text-on-marathon-green: var(--gray-19);
+
+    --separator: var(--gray-29); /* Separator under settings */
+    --muted-text-under-settings: #7c8092;
+
+    --pagination-active: var(--gray-98);
+    --pagination-idle: var(--gray-51);
+
+    --scroll-thumb: #353740; /* Also used by scroll-thumb */
+    --scroll-track: #1e1f24;
+
+    --decorative-cross: #353740; /* Also used by scroll-thumb */
+
+    --settings-row-idle-bg: #1e1f24;
+    --settings-row-idle-fg: var(--gray-50);
+    --settings-row-hover-bg: var(--gray-29); /* When hovering row, or its input */
+    --settings-row-hover-fg: var(--gray-50); /* Same as idle */
+
+    --settings-row-input-idle-bg: #b4b6c0;
+    --settings-row-input-hover-bg: var(--gray-50); /* Only when hovering input, not rest of row */
+    --settings-row-input-track-fg: var(--gray-19);
+    --settings-row-input-track-bg: #7c8092;
+    --settings-row-input-thumb: var(--gray-19);
+
+    --settings-row-dropdown-bg: var(--gray-19);
+    --settings-row-dropdown-fg: var(--gray-98);
+    --settings-row-dropdown-kbd-bg: #333333;
+    --settings-row-dropdown-kbd-border: var(--white-1);
+    --settings-row-dropdown-kbd-fg: var(--white-1);
+    --settings-row-dropdown-scrollthumb: #b8b8ba; /* No track */
+    --settings-row-dropdown-border: var(--gray-29);
+    --settings-row-dropdown-separator: #353740;
+    --settings-row-dropdown-itemhover-bg: #353740;
+
+    --settings-row-tab-idle-current-bg: #b4b6c0;
+    --settings-row-tab-idle-notcurrent-bg: #09090b;
+    --settings-row-tab-idle-notcurrent-fg: #7c8092;
+    --settings-row-tab-hover-notcurrent-fg: var(--gray-98);
+
+    --reset-button-idle-bg: #353740; /* Called reset for now, see what button variant it is after */
+    --reset-button-idle-fg: var(--gray-98);
+    --reset-button-hover-bg: var(--gray-29);
+    --reset-button-active-bg: #c0fe04; /* Marathon Green (Appears in fragment grid fill */
+    --reset-button-active-fg-checkmark: #5d694f; /* Picked up green, probably too thin */
+
+    --isolation-bg: #000000; /* Used as BG during brightness settings view */
+
+    --separator-bg: #353740;
+
+    --popover-heading: var(--gray-98);
+    --popover-body-text: #d0d1d8;
+    --popover-bg: "unknown, uses opacity + backdrop-blur";
+    /* Potentially #212327 at 94% opacity */
+    --popover-border: var(--gray-29);
   }
 }

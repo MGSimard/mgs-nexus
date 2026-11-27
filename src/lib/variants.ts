@@ -6,6 +6,7 @@ type Table<V extends Axes, S extends Record<string, Record<string, unknown>>> = 
   variants: V;
   defaults: Selection<V>;
   states?: S;
+  exclude?: readonly Partial<Selection<V>>[];
 };
 
 export type Variants<
@@ -29,6 +30,9 @@ export function defineVariants<
   const S extends Record<string, Record<string, unknown>> = Record<never, never>,
 >(table: Table<V, S>): Variants<V, S> {
   const axes = Object.keys(table.variants) as (keyof V & string)[];
+  const exclude = table.exclude ?? [];
+  const excluded = (row: Selection<V>) =>
+    exclude.some((rule) => Object.entries(rule).every(([axis, value]) => row[axis] === value));
   return {
     variants: table.variants,
     defaults: table.defaults,
@@ -39,10 +43,12 @@ export function defineVariants<
       ) as Record<`data-${string}`, string>;
     },
     combos() {
-      return axes.reduce<Selection<V>[]>(
-        (rows, axis) => rows.flatMap((row) => table.variants[axis]!.map((value) => ({ ...row, [axis]: value }))),
-        [{} as Selection<V>]
-      );
+      return axes
+        .reduce<Selection<V>[]>(
+          (rows, axis) => rows.flatMap((row) => table.variants[axis]!.map((value) => ({ ...row, [axis]: value }))),
+          [{} as Selection<V>]
+        )
+        .filter((row) => !excluded(row));
     },
   };
 }

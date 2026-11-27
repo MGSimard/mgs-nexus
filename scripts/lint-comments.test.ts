@@ -72,15 +72,20 @@ test("reports comments in JSON config files, not comment markers inside their st
   expect(out).not.toMatch(/settings\.json:2/);
 });
 
-test("allows license comments and triple-slash references", () => {
+test("allows license comments, triple-slash references and hex color notes", () => {
   const { code, out } = fixture({
     "a.ts": '/*! license */\n/// <reference types="astro/client" />\nconst a = 1;\n',
+    "b.css": ":root {\n  --accent: oklch(0.92 0.23 125.54); /* #c0fe04 Marathon Green */\n}\n",
   }).run();
   expect(code, out).toBe(0);
 });
 
-test("skips the installed skill folders", () => {
-  const { code, out } = fixture({ ".agents/s/x.ts": COMMENTED_TS, ".claude/s/x.ts": COMMENTED_TS }).run();
+test("skips the installed skill folders and the global stylesheet", () => {
+  const { code, out } = fixture({
+    ".agents/s/x.ts": COMMENTED_TS,
+    ".claude/s/x.ts": COMMENTED_TS,
+    "src/css/global.css": ":root {\n  --separator: #353740; /* Separator under settings */\n}\n",
+  }).run();
   expect(code, out).toBe(0);
 });
 

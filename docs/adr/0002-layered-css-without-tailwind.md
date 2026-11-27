@@ -5,11 +5,13 @@ The Nexus is styled with hand-written CSS organised by cascade layers, not Tailw
 The layer order is declared once, in `src/css/global.css`:
 
 ```css
-@layer reset, ui-sdk, components;
+@layer reset, debug, ui-sdk, base, components;
 ```
 
 - **`reset`**: the vendored Tailwind Preflight in `src/css/reset.css`.
+- **`debug`**: temporary layout outlines while building. It ranks below every layer except `reset` (which must stay first), so it never hides a real style such as the focus ring.
 - **`ui-sdk`**: the behaviour CSS `@ui-sdk/web` injects at runtime (hiding closed popups, default `display`, popover resets).
+- **`base`**: element defaults and tokens in `src/css/global.css`, such as `html`, `body` and headings.
 - **`components`**: each Astro component's scoped `<style>`, so its styles ship only on pages that render it and are deleted with it.
 
 A new layer is added to the statement when its first rule is written, not before.
