@@ -19,6 +19,14 @@ export default defineConfig({
   },
   fonts: [
     {
+      provider: fontProviders.fontsource(),
+      name: "Orbitron",
+      styles: ["normal"],
+      weights: ["400 900"],
+      display: "swap",
+      cssVariable: "--font-orbitron",
+    },
+    {
       provider: fontProviders.local(),
       name: "Alloy Sans",
       cssVariable: "--font-alloy",
