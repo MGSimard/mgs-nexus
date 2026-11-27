@@ -80,8 +80,12 @@ test("allows license comments, triple-slash references and hex color notes", () 
   expect(code, out).toBe(0);
 });
 
-test("skips the installed skill folders", () => {
-  const { code, out } = fixture({ ".agents/s/x.ts": COMMENTED_TS, ".claude/s/x.ts": COMMENTED_TS }).run();
+test("skips the installed skill folders and the global stylesheet", () => {
+  const { code, out } = fixture({
+    ".agents/s/x.ts": COMMENTED_TS,
+    ".claude/s/x.ts": COMMENTED_TS,
+    "src/css/global.css": ":root {\n  --separator: #353740; /* Separator under settings */\n}\n",
+  }).run();
   expect(code, out).toBe(0);
 });
 
