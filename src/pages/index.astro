@@ -19,7 +19,9 @@ import Layout from "../layouts/Layout.astro";
     isolation: isolate;
     height: 100dvh;
     overflow: hidden;
-    background: url("/assets/clouds.jpg") center / cover no-repeat;
+    background:
+      radial-gradient(circle, var(--gray-30) 1px, transparent 1.5px) 0 0 / 16px 16px,
+      black;
   }
   main::before,
   main::after {
