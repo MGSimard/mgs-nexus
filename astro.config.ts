@@ -6,7 +6,11 @@ export default defineConfig({
   trailingSlash: "never",
   build: { format: "file" },
   prefetch: true,
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => !/\/schema(\/[^/]+\/frame)?$/.test(new URL(page).pathname),
+    }),
+  ],
   vite: {
     plugins: [],
   },
