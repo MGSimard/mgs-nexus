@@ -1,0 +1,70 @@
+---
+import { SITE_TITLE } from "@/lib/consts";
+import { entries } from "@/lib/schema";
+
+const SECTIONS = [
+  { base: "/work", label: "Work" },
+  { base: "/stack", label: "Stack" },
+  { base: "/intel", label: "Intel" },
+  { base: "/schema", label: "Schema", href: `/schema/${entries[0]!.slug}` },
+];
+
+const path = Astro.url.pathname;
+const current = (base: string) => path === base || path.startsWith(`${base}/`);
+---
+
+<header>
+  <a href="/" class="home">
+    {SITE_TITLE}
+  </a>
+  <nav aria-label="Sections">
+    <ul>
+      {SECTIONS.map(({ base, label, href = base }) => (
+        <li>
+          <a href={href} aria-current={current(base) ? "page" : undefined}>
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  @layer components {
+    :global(:root) {
+      --site-nav-height: 3rem;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--site-nav-height);
+      padding-inline: 1rem;
+      border-bottom: 1px solid var(--card-bg);
+      font-family: var(--font-oxanium);
+      text-transform: uppercase;
+    }
+    .home {
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    ul {
+      display: flex;
+      gap: 0.25rem;
+    }
+    nav a {
+      display: block;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.875rem;
+      color: var(--input-bg);
+      &:hover {
+        color: var(--foreground);
+      }
+      &[aria-current="page"] {
+        background: var(--primary-button-bg);
+        color: var(--primary-button-fg);
+      }
+    }
+  }
+</style>

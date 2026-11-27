@@ -23,6 +23,7 @@ A new layer is added to the statement when its first rule is written, not before
 
 ## Consequences
 
+- Astro inlines a page's scoped `<style>` into `<head>` ahead of the bundled `global.css`, so a page's `@layer components` block would otherwise name that layer first and rank it below `reset`. `src/components/BaseHead.astro` therefore repeats the order statement as the first stylesheet in `<head>`; the copy in `global.css` keeps the order for any page built without `BaseHead`.
 - `@ui-sdk/web` injects its layer at runtime, so the layer must already be named in the order statement. Otherwise it would be created when injected, landing above our own layers.
 - A layer's position is fixed where it first appears. The build folds the order statement into the reset's `@layer reset {}` block, so the built CSS opens with `@layer reset{…}` and then `@layer ui-sdk,components;`. That only gives the declared order while `reset` stays first in the statement.
 - The reset's `[hidden]` rule is `!important`; important declarations in an earlier layer beat later layers, so nothing can un-hide a `[hidden]` element.

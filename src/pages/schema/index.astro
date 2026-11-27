@@ -1,0 +1,5 @@
+---
+import { entries } from "@/lib/schema";
+
+return Astro.redirect(`/schema/${entries[0]!.slug}`);
+---
