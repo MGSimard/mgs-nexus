@@ -1,38 +1,101 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
 const LINKS = ["work", "stack", "intel", "logs", "schema"];
 ---
 
 <Layout>
   <div id="hero">
     <main>
+      <video
+        id="backdrop"
+        src="/assets/landing.mp4"
+        poster="/assets/landing.jpg"
+        autoplay
+        muted
+        loop
+        playsinline
+        disablepictureinpicture
+        aria-hidden="true"></video>
+      <span>FULLSTACK / DESIGN ENGINEER / LEVEL DESIGN</span>
       <h1>MGSIMARD</h1>
-      <p>FULLSTACK / DESIGN ENGINEER / LEVEL DESIGN</p>
+      <nav>
+        <ul>
+          {LINKS.map((link) => (
+            <li>
+              <a href={link}>{link}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <p>SELECT ? TO CONTINUE</p>
+      <p>Date? Curr. Company?</p>
     </main>
-    <nav>
-      <ul>
-        {LINKS.map((link) => (
-          <li>
-            <a href={link}>/ {link}</a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <div id="decor">
+      <img id="planet" src="/assets/planet.webp" alt="" aria-hidden="true" decoding="async" />
+    </div>
   </div>
 </Layout>
 
 <style>
-  #hero {
-    height: 100dvh;
-  }
-  main {
-  }
-  h1 {
-    font-size: clamp(2rem, 3vw, 4rem);
-    font-family: var(--font-oxanium);
-  }
-  nav {
-    text-transform: uppercase;
+  @layer components {
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    #hero {
+      flex-grow: 1;
+      overflow: clip;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    main {
+      position: relative;
+      isolation: isolate;
+      overflow: clip;
+      @media (prefers-reduced-motion: reduce) {
+        background: url("/assets/landing.jpg") right center / cover no-repeat;
+      }
+    }
+    #backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: right center;
+      pointer-events: none;
+      @media (prefers-reduced-motion: reduce) {
+        display: none;
+      }
+    }
+    h1 {
+      font-family: var(--font-display);
+      color: var(--accent);
+      font-size: clamp(2rem, 4vw, 6rem);
+    }
+    nav {
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    #decor {
+      container-type: size;
+      position: relative;
+      overflow: clip;
+      background: var(--accent);
+    }
+    #planet {
+      position: absolute;
+      top: 50%;
+      left: 30%;
+      width: max(142cqh, 100cqw);
+      height: auto;
+      aspect-ratio: 1;
+      max-width: none;
+      object-fit: contain;
+      translate: 0 -50%;
+      pointer-events: none;
+      user-select: none;
+    }
   }
 </style>

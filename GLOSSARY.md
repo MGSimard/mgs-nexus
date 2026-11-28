@@ -50,6 +50,10 @@ _Avoid_: Status, variant
 One rendering of a component in **Schema**, showing a single combination of **Variants** in a single **State**.
 _Avoid_: Story, example, preview, demo
 
+**GlyphLava**:
+An animated backdrop of glyphs set on a fixed grid, where the glyph shown in each cell follows a slowly flowing pattern, like the blobs in a lava lamp.
+_Avoid_: glyph field, noise background, hero background
+
 ### Content
 
 **Log** _(reserved, not yet built)_:
