@@ -79,6 +79,7 @@ const LINKS = ["work", "stack", "intel", "logs", "schema"];
       text-transform: uppercase;
     }
     #decor {
+      container-type: size;
       position: relative;
       overflow: clip;
       background: var(--accent);
@@ -86,13 +87,13 @@ const LINKS = ["work", "stack", "intel", "logs", "schema"];
     #planet {
       position: absolute;
       top: 50%;
-      right: -45%;
-      height: 120%;
+      left: 30%;
+      width: max(142cqh, 100cqw);
+      height: auto;
       aspect-ratio: 1;
       max-width: none;
       object-fit: contain;
       translate: 0 -50%;
-      scale: 1.183;
       pointer-events: none;
       user-select: none;
     }
